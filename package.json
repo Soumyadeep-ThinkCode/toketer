@@ -11,12 +11,12 @@
   "icon": "media/icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/soumyadeepghosh/toketer.git"
+    "url": "https://github.com/Soumyadeep-ThinkCode/toketer.git"
   },
   "bugs": {
-    "url": "https://github.com/soumyadeepghosh/toketer/issues"
+    "url": "https://github.com/Soumyadeep-ThinkCode/toketer/issues"
   },
-  "homepage": "https://github.com/soumyadeepghosh/toketer#readme",
+  "homepage": "https://github.com/Soumyadeep-ThinkCode/toketer#readme",
   "engines": {
     "vscode": "^1.95.0"
   },
