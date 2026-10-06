@@ -1,0 +1,48 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "es2022": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/explicit-function-return-type": [
+      "warn",
+      {
+        "allowExpressions": true
+      }
+    ],
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        "selector": "import",
+        "format": [
+          "camelCase",
+          "PascalCase"
+        ]
+      }
+    ],
+    "curly": "warn",
+    "eqeqeq": "warn",
+    "no-throw-literal": "warn"
+  },
+  "ignorePatterns": [
+    "dist",
+    "out",
+    "node_modules",
+    "esbuild.js",
+    "**/*.test.ts"
+  ]
+}

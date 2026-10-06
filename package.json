@@ -1,0 +1,165 @@
+{
+  "name": "toketer",
+  "displayName": "Toketer — AI Cost Meter",
+  "description": "A live fuel gauge for AI coding: see how many tokens each AI prompt used and what it cost, right inside your editor. Metadata-only, private, zero-config.",
+  "version": "1.0.0",
+  "publisher": "toketer",
+  "author": {
+    "name": "Soumyadeep Ghosh"
+  },
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soumyadeepghosh/toketer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/soumyadeepghosh/toketer/issues"
+  },
+  "homepage": "https://github.com/soumyadeepghosh/toketer#readme",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "ai",
+    "tokens",
+    "cost",
+    "copilot",
+    "cursor",
+    "usage",
+    "meter"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "chatParticipants": [
+      {
+        "id": "toketer.cost",
+        "name": "toketer",
+        "fullName": "Toketer",
+        "description": "Chat and see the real token cost of every prompt",
+        "isSticky": true
+      }
+    ],
+    "commands": [
+      {
+        "command": "toketer.openPanel",
+        "title": "Toketer: Open Cost Panel",
+        "category": "Toketer"
+      },
+      {
+        "command": "toketer.openSources",
+        "title": "Toketer: Sources",
+        "category": "Toketer"
+      },
+      {
+        "command": "toketer.importCopilotUsage",
+        "title": "Toketer: Import Copilot Usage",
+        "category": "Toketer"
+      },
+      {
+        "command": "toketer.showDiagnostics",
+        "title": "Toketer: Show Diagnostics",
+        "category": "Toketer"
+      },
+      {
+        "command": "toketer.askAi",
+        "title": "Toketer: Ask AI (real tokens)",
+        "category": "Toketer"
+      },
+      {
+        "command": "toketer.toggleCurrency",
+        "title": "Toketer: Toggle Currency (₹ / $)",
+        "category": "Toketer"
+      },
+      {
+        "command": "toketer.refreshPricing",
+        "title": "Toketer: Refresh Pricing Table",
+        "category": "Toketer"
+      },
+      {
+        "command": "toketer.clearActivity",
+        "title": "Toketer: Clear Local Activity History",
+        "category": "Toketer"
+      }
+    ],
+    "configuration": {
+      "title": "Toketer",
+      "properties": {
+        "toketer.currency": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "USD",
+            "INR"
+          ],
+          "default": "auto",
+          "markdownDescription": "Currency used to display AI costs. `auto` picks ₹ (INR) or $ (USD) from your editor locale."
+        },
+        "toketer.usdToInrRate": {
+          "type": "number",
+          "default": 83,
+          "minimum": 1,
+          "markdownDescription": "Exchange rate used to convert internal USD cost estimates into INR for display."
+        },
+        "toketer.pricing.apiBaseUrl": {
+          "type": "string",
+          "default": "https://api.toketer.dev",
+          "markdownDescription": "Base URL used by **Toketer: Refresh Pricing Table** to fetch an updated model pricing table. Toketer works fully offline with its bundled prices; this is only used when you run that command."
+        },
+        "toketer.sources.claudeCode.enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Automatically read **Claude Code** local session logs to capture exact token usage (metadata only — never prompt or file contents). If no logs are found, Toketer stays silent."
+        },
+        "toketer.sources.claudeCode.logPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Optional override for the Claude Code `projects` logs folder, for non-standard installs. Leave empty to auto-detect (`~/.claude/projects`, `$CLAUDE_CONFIG_DIR/projects`, …)."
+        },
+        "toketer.sources.copilotEstimate.enabled": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Show a **live, clearly-labelled estimate** of GitHub Copilot cost (on by default). No public API exposes Copilot's tokens, so Toketer detects each agent *turn* from the edits it makes (reading only the *size* of each change, never the content) and counts it as one premium request. Always shown as an estimate (`~`). For exact figures use **Toketer: Import Copilot Usage**."
+        },
+        "toketer.sources.copilotEstimate.pricePerRequestUsd": {
+          "type": "number",
+          "default": 0.04,
+          "minimum": 0,
+          "markdownDescription": "US-dollar price per GitHub Copilot premium request, used by the live estimate. Adjust to match your plan's overage rate."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "package": "node esbuild.js --production",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "vsce:package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "^1.95.0",
+    "@typescript-eslint/eslint-plugin": "^7.13.0",
+    "@typescript-eslint/parser": "^7.13.0",
+    "@vscode/vsce": "^2.29.0",
+    "esbuild": "^0.21.5",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
+}
